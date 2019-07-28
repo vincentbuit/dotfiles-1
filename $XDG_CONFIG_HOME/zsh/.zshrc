@@ -46,7 +46,6 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 else
     PROMPT='%B%1~%(?..%F{red})%#%f%b '
 fi
-REPORTTIME=5
 zle_highlight=(default:bold)
 
 function precmd {
