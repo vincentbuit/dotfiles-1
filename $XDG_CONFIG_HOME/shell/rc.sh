@@ -16,6 +16,7 @@ fi
 
 alias apt='sudo apt'
 alias dnf='sudo dnf'
+alias dotfiles='git --git-dir="$XDG_DATA_HOME/dotfiles" --work-tree="$HOME"'
 alias mutt="mutt -F \"$XDG_CONFIG_HOME/mutt/muttrc\""
 alias pacman='sudo pacman'
 alias pdflatex='pdflatex -interaction=batchmode'
