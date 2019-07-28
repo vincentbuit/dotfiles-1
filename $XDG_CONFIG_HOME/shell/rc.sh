@@ -114,6 +114,11 @@ gitg() {
     )
 }
 
+tig() {
+    [ $# -eq 0 ] && set -- --branches --remotes --tags
+    command tig "$@"
+}
+
 free() {
     command free -hw "$@" | sed 's/total/. &/;/Swap: *0B *0B *0B/d' | column -t;
 }
