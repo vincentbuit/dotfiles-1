@@ -39,9 +39,9 @@ if [ "$OS" = Darwin ] && which vise >/dev/null 2>&1; then
     export EDITOR=vise
 elif (which vis && [ "$OS" != Darwin ] || vis -v) >/dev/null 2>&1; then
     export EDITOR=vis
-elif which nvim >/dev/null 2>/dev/null; then
+elif which nvim >/dev/null 2>&1; then
     export EDITOR=nvim
-elif which vim >/dev/null 2>/dev/null; then
+elif which vim >/dev/null 2>&1; then
     export EDITOR=vim
 fi
 
@@ -78,7 +78,7 @@ fi
 chmod go-rwx "$GNUPGHOME" >/dev/null 2>&1
 if [ "$(stat -c%a "$GNUPGHOME" 2>/dev/null)" != "700" ] \
     && [ -f "$GNUPGHOME/keys.asc" ]; then
-    killall -s SIGKILL gpg-agent >/dev/null 2>/dev/null
+    killall -s SIGKILL gpg-agent >/dev/null 2>&1
     #generate with gpg --export-secret-keys -a >"$GNUPGHOME/keys.asc"
     (gpg --batch --import "$GNUPGHOME/keys.asc" 2>/dev/null&)
     (
