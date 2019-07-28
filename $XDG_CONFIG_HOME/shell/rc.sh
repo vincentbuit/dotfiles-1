@@ -106,6 +106,10 @@ git_promptline() {
             }'
 }
 
+gitg() {
+    gitg.exe >/dev/null 2>&1 &
+}
+
 free() {
     command free -hw "$@" | sed 's/total/. &/;/Swap: *0B *0B *0B/d' | column -t;
 }
