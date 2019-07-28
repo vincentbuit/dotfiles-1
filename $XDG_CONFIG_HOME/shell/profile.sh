@@ -78,7 +78,7 @@ fi
 
 # Set-up ----------------------------------------------------------------------
 chmod go-rwx "$GNUPGHOME" >/dev/null 2>&1
-if [ "$(stat -c%a "$GNUPGHOME" 2>/dev/null)" != "700" ] \
+if [ "$(gpg --list-secret-keys | wc -l)" = 0 ] \
     && [ -f "$GNUPGHOME/keys.asc" ]; then
     killall -s SIGKILL gpg-agent >/dev/null 2>&1
     #generate with gpg --export-secret-keys -a >"$GNUPGHOME/keys.asc"
