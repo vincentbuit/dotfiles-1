@@ -109,7 +109,7 @@ git_promptline() {
 
 gitg() {
     (
-        cd "$(upwardfind "$PWD" ".git"|sed 's|/.git$||')"
+        cd "$(cpwardfind "$PWD" ".git"|sed 's|/.git$||')"
         gitg.exe >/dev/null 2>&1 &
     )
 }
