@@ -18,6 +18,7 @@ alias apt='sudo apt'
 alias df='df -h'
 alias dnf='sudo dnf'
 alias dotfiles='git --git-dir="$XDG_DATA_HOME/dotfiles" --work-tree="$HOME"'
+alias gpgunlock='gpg -da "$GNUPGHOME/empty.asc" >/dev/null 2>&1'
 alias mutt="mutt -F \"$XDG_CONFIG_HOME/mutt/muttrc\""
 alias pacman='sudo pacman'
 alias pdflatex='pdflatex -interaction=batchmode'
@@ -108,30 +109,15 @@ git_promptline() {
             }' 2>/dev/null
 }
 
-gitg() {
-    (
-        cd "$(upwardfind "$PWD" ".git"|sed 's|/.git$||')"
-        gitg.exe >/dev/null 2>&1 &
-    )
-}
-
 tig() {
     [ $# -eq 0 ] && set -- --branches --remotes --tags
     command tig "$@"
-}
-
-free() {
-    command free -hw "$@" | sed 's/total/. &/;/Swap: *0B *0B *0B/d' | column -t;
 }
 
 rmrfhome() {
     printf "Completely delete $HOME? "; read
     [ "$REPLY" = y ] || [ "$REPLY" = Y ] || return 1;
     find "$HOME" -mindepth 1 -not -path "$HOME/.ssh*" -delete
-}
-
-gpgunlock() {
-    gpg -da "$GNUPGHOME/empty.asc" >/dev/null 2>/dev/null
 }
 
 mkmy() {
