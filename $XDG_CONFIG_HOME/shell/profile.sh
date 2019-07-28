@@ -35,7 +35,9 @@ fi
 set +a
 
 # EDITOR ----------------------------------------------------------------------
-if (which vis && [ "$OS" != Darwin ] || vis -v) >/dev/null 2>/dev/null; then
+if [ "$OS" = Darwin ] && which vise >/dev/null 2>&1; then
+    export EDITOR=vise
+elif (which vis && [ "$OS" != Darwin ] || vis -v) >/dev/null 2>&1; then
     export EDITOR=vis
 elif which nvim >/dev/null 2>/dev/null; then
     export EDITOR=nvim
