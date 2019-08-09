@@ -87,11 +87,6 @@ if [ $(gpg --list-secret-keys | wc -l 2>/dev/null) = 0 ] \
             | grep "michiel@vdnheuvel.com" -B 1 | sed 's/ //g; s/.*=//; 1q' \
         ):6:" | gpg --import-ownertrust 1>/dev/null 2>/dev/null&
     )
-    if [ "$OS" = Darwin ]; then
-        echo '#!/usr/bin/env sh' >"$PREFIX/bin/gpg"
-        echo 'command gpg2 "$@"' >>"$PREFIX/bin/gpg"
-        chmod +x "$PREFIX/bin/gpg"
-    fi
 fi
 
 mkdir -p "$XDG_DATA_HOME/zsh" #For history
