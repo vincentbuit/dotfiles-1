@@ -78,8 +78,8 @@ fi
 
 # Set-up ----------------------------------------------------------------------
 chmod go-rwx "$GNUPGHOME" >/dev/null 2>&1
-if [ $(gpg --list-secret-keys | wc -l 2>/dev/null) = 0 ] \
-    && [ -f "$GNUPGHOME/keys.asc" ]; then
+if command -v gpg >/dev/null 2>&1 && [ -f "$GNUPGHOME/keys.asc" ]\
+    && [ $(gpg --list-secret-keys | wc -l 2>/dev/null) = 0 ]; then
     killall -s SIGKILL gpg-agent >/dev/null 2>&1
     #generate with gpg --export-secret-keys -a >"$GNUPGHOME/keys.asc"
     (gpg --batch --import "$GNUPGHOME/keys.asc" 2>/dev/null&)
