@@ -40,3 +40,16 @@ rm "$alacritty_info"
 [ -d "$PREFIX/dot" ] \
     || git clone https://milhnl@github.com/milhnl/dotfiles "$PREFIX/dot" \
     && (cd "$PREFIX/dot" && make link)
+
+#Set up gpg
+chmod go-rwx "$GNUPGHOME" >/dev/null 2>&1
+if exists gpg && [ $(gpg --list-secret-keys | wc -l 2>/dev/null) = 0 ]; then
+    killall -s SIGKILL gpg-agent >/dev/null 2>&1 || true
+    #generate with gpg --export-secret-keys -a >"$GNUPGHOME/keys.asc"
+    gpg --batch --import "$GNUPGHOME/keys.asc" 2>/dev/null
+    echo "$(gpg --list-keys --fingerprint 2>/dev/null \
+        | grep "michiel@vdnheuvel.com" -B 1 | sed 's/ //g; s/.*=//; 1q' \
+    ):6:" | gpg --import-ownertrust 1>/dev/null 2>/dev/null
+fi
+
+echo "hsts-file = $XDG_CACHE_HOME/wget-hsts" >"$XDG_CONFIG_HOME/wgetrc"

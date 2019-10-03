@@ -77,19 +77,6 @@ elif [ "$OS" = Darwin ]; then
 fi
 
 # Set-up ----------------------------------------------------------------------
-chmod go-rwx "$GNUPGHOME" >/dev/null 2>&1
-if command -v gpg >/dev/null 2>&1 && [ -f "$GNUPGHOME/keys.asc" ]\
-    && [ $(gpg --list-secret-keys | wc -l 2>/dev/null) = 0 ]; then
-    killall -s SIGKILL gpg-agent >/dev/null 2>&1
-    #generate with gpg --export-secret-keys -a >"$GNUPGHOME/keys.asc"
-    (gpg --batch --import "$GNUPGHOME/keys.asc" 2>/dev/null&)
-    (
-        echo "$(gpg --list-keys --fingerprint 2>/dev/null \
-            | grep "michiel@vdnheuvel.com" -B 1 | sed 's/ //g; s/.*=//; 1q' \
-        ):6:" | gpg --import-ownertrust 1>/dev/null 2>/dev/null&
-    )
-fi
-
 mkdir -p "$XDG_DATA_HOME/zsh" #For history
 mkdir -p "$XDG_DATA_HOME/bash" #For history
 
