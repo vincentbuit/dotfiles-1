@@ -43,6 +43,17 @@ bindsym $mod+Ctrl+Space exec alacritty --class launcher -e sh -c \
         | fzy \
         | xargs -r -d "\\n" swaymsg -t command exec -- pass show -c'
 
+bindsym $mod+Return exec --no-startup-id alacritty --class launcher -e sh -c '\
+    title="$(swaymsg -t get_tree | jq -r ". \
+        | recurse(.nodes[]?) \
+        | select(.type == \\"con\\") \
+        | select(.app_id != \\"firefox\\") \
+        | .name" | fzy)"; \
+    swaymsg "[con_id=$(swaymsg -t get_tree | jq -r --arg title "$title" ". \
+        | recurse(.nodes[]?) \
+        | select(.name == \$title) \
+        | .id")] focus";'
+
 exec_always --no-startup-id '\
     killall swayidle; \
     exec swayidle -w \
