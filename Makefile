@@ -10,7 +10,7 @@ common = set -a; \
 	PWD="$${PWD:-$(pwd)}"; \
 	for_all() { \
 		find '$$'* -not -type d -exec sh -c 'for i; do \
-			f="$${i\#$$}"; f="$$(printenv "$${f%%/*}")/$${i\#*/}"; \
+			f="$${i\#$$}"; f="$$(printenv "$${f%%/*}")/$${i\#*/}" || continue;\
 			'"$$*"'; \
 		done' -- {} +; \
 	}
